@@ -328,12 +328,12 @@
       <div class="inner-step">
         <div class="tag">STEP A</div>
         <div class="name">이야기</div>
-        <div class="desc">한자를 노출하지 않고 상황·뜻으로만 힌트 제공</div>
+        <div class="desc">한자는 한글로 표기하여 포함, 상황·뜻으로 힌트 제공</div>
       </div>
       <div class="inner-step">
         <div class="tag">STEP B</div>
         <div class="name">퀴즈</div>
-        <div class="desc">4지선다 객관식으로 정답 한자 추리</div>
+        <div class="desc">4지선다 객관식(한자+한글 표기 병기)으로 정답 한자 추리</div>
       </div>
       <div class="inner-step">
         <div class="tag">STEP C</div>
@@ -351,7 +351,7 @@
   <section>
     <div class="sec-head"><span class="sec-num">貳 · 02</span><h2 class="sec-title">확정 스펙</h2></div>
     <div class="spec-grid">
-      <div class="spec-row"><div class="lbl">퀴즈 방식</div><div class="val">이야기에는 한자를 직접 노출하지 않음 · 뜻/상황 서술만으로 힌트 제공 → 4지선다 객관식으로 정답 추리</div></div>
+      <div class="spec-row"><div class="lbl">퀴즈 방식</div><div class="val">이야기에는 한자를 한글로 표기하여 포함 · 뜻/상황 서술과 함께 힌트 제공 → 4지선다 객관식(한자+한글 표기 병기)으로 정답 추리</div></div>
       <div class="spec-row"><div class="lbl">그려보기 난이도</div><div class="val">획순 번호(①②③…) 오버레이 표시, 순서대로 캔버스에 따라 그리기 · 정확도 채점은 초안에서 생략</div></div>
       <div class="spec-row"><div class="lbl">획순 데이터 소스</div><div class="val">오픈소스 라이브러리 <b>HanziWriter</b> 사용 (자체 좌표 제작 없이 CDN으로 로드) · 데이터셋에 없는 글자는 다른 한자로 교체</div></div>
       <div class="spec-row"><div class="lbl">타깃 난이도</div><div class="val">일상 생활한자, 성인 교양 수준 (간판·서류·광고 문구 등에서 자주 접하는 한자)</div></div>
@@ -368,8 +368,8 @@
         <div class="glyph" data-idx="01">禁</div>
         <div class="body">
           <div class="reading">금할 금 · 금지 / 금연 / 금연구역</div>
-          <div class="story">퇴근길, 편의점 유리문에 빨간 글씨 두 글자가 붙어있었다. 이 안에서는 담배를 피울 수 없다는 뜻이었다.</div>
-          <div class="choices">보기: <b>禁</b> / <span class="distract">進</span> · <span class="distract">開</span> · <span class="distract">止</span></div>
+          <div class="story">퇴근길, 편의점 유리문에 빨간 글씨로 "금연"이라는 두 글자가 붙어있었다. 이 안에서는 담배를 피울 수 없다는 뜻이었다.</div>
+          <div class="choices">보기: <b>禁(금)</b> / <span class="distract">進(진)</span> · <span class="distract">開(개)</span> · <span class="distract">止(지)</span></div>
         </div>
       </div>
 
@@ -377,8 +377,8 @@
         <div class="glyph" data-idx="02">藥</div>
         <div class="body">
           <div class="reading">약 약 · 약국 / 약사 / 약효</div>
-          <div class="story">몸이 아플 때 찾아가는 곳, 그 간판에는 늘 이 한 글자가 크게 적혀 있다.</div>
-          <div class="choices">보기: <b>藥</b> / <span class="distract">樂</span> · <span class="distract">藝</span> · <span class="distract">業</span></div>
+          <div class="story">몸이 아플 때 찾아가는 곳, 그 간판에는 늘 "약국"이라는 단어가 크게 적혀 있다.</div>
+          <div class="choices">보기: <b>藥(약)</b> / <span class="distract">樂(악)</span> · <span class="distract">藝(예)</span> · <span class="distract">業(업)</span></div>
         </div>
       </div>
 
@@ -386,8 +386,8 @@
         <div class="glyph" data-idx="03">注</div>
         <div class="body">
           <div class="reading">부을/댈 주 · 주의 / 주목</div>
-          <div class="story">택배 상자 옆면에 붙은 노란 스티커, "조심해서 다뤄달라"는 뜻의 단어 앞글자였다.</div>
-          <div class="choices">보기: <b>注</b> / <span class="distract">主</span> · <span class="distract">住</span> · <span class="distract">汪</span></div>
+          <div class="story">택배 상자 옆면에 붙은 노란 스티커, "주의"라고 적혀 "조심해서 다뤄달라"는 뜻을 전하고 있었다.</div>
+          <div class="choices">보기: <b>注(주)</b> / <span class="distract">主(주)</span> · <span class="distract">住(주)</span> · <span class="distract">汪(왕)</span></div>
         </div>
       </div>
 
@@ -395,8 +395,8 @@
         <div class="glyph" data-idx="04">效</div>
         <div class="body">
           <div class="reading">본받을 효 · 효과 / 효능</div>
-          <div class="story">광고에서 "이 제품을 쓰면 확실히 좋아진다"고 강조할 때 늘 등장하는 단어의 첫 글자였다.</div>
-          <div class="choices">보기: <b>效</b> / <span class="distract">校</span> · <span class="distract">敎</span> · <span class="distract">放</span></div>
+          <div class="story">광고에서 "이 제품을 쓰면 확실히 좋아진다"고 강조할 때 늘 등장하는 단어, "효과"의 첫 글자였다.</div>
+          <div class="choices">보기: <b>效(효)</b> / <span class="distract">校(교)</span> · <span class="distract">敎(교)</span> · <span class="distract">放(방)</span></div>
         </div>
       </div>
 

@@ -351,7 +351,7 @@
 const QUESTIONS = [
   {
     id: 1,
-    story: "퇴근길, 편의점 유리문에 빨간 글씨 두 글자가 붙어있었다. 이 안에서는 담배를 피울 수 없다는 뜻이었다.",
+    story: "퇴근길, 편의점 유리문에 빨간 글씨로 \"금연\"이라는 두 글자가 붙어있었다. 이 안에서는 담배를 피울 수 없다는 뜻이었다.",
     answer: "禁",
     reading: "금할 금",
     relatedWords: ["금지", "금연", "금연구역"],
@@ -359,7 +359,7 @@ const QUESTIONS = [
   },
   {
     id: 2,
-    story: "몸이 아플 때 찾아가는 곳, 그 간판에는 늘 이 한 글자가 크게 적혀 있다.",
+    story: "몸이 아플 때 찾아가는 곳, 그 간판에는 늘 \"약국\"이라는 단어가 크게 적혀 있다.",
     answer: "藥",
     reading: "약 약",
     relatedWords: ["약국", "약사", "약효"],
@@ -367,7 +367,7 @@ const QUESTIONS = [
   },
   {
     id: 3,
-    story: "택배 상자 옆면에 붙은 노란 스티커, \"조심해서 다뤄달라\"는 뜻의 단어 앞글자였다.",
+    story: "택배 상자 옆면에 붙은 노란 스티커, \"주의\"라고 적혀 \"조심해서 다뤄달라\"는 뜻을 전하고 있었다.",
     answer: "注",
     reading: "부을/댈 주",
     relatedWords: ["주의", "주목"],
@@ -375,13 +375,20 @@ const QUESTIONS = [
   },
   {
     id: 4,
-    story: "광고에서 \"이 제품을 쓰면 확실히 좋아진다\"고 강조할 때 늘 등장하는 단어의 첫 글자였다.",
+    story: "광고에서 \"이 제품을 쓰면 확실히 좋아진다\"고 강조할 때 늘 등장하는 단어, \"효과\"의 첫 글자였다.",
     answer: "效",
     reading: "본받을 효",
     relatedWords: ["효과", "효능"],
     choices: ["效", "校", "敎", "放"]
   }
 ];
+
+const GLYPH_SOUNDS = {
+  "禁": "금", "進": "진", "開": "개", "止": "지",
+  "藥": "약", "樂": "악", "藝": "예", "業": "업",
+  "注": "주", "主": "주", "住": "주", "汪": "왕",
+  "效": "효", "校": "교", "敎": "교", "放": "방"
+};
 
 let current = 0;
 let selectedCorrect = [];
@@ -427,7 +434,8 @@ function showQuiz(){
   shuffled.forEach(ch => {
     const btn = document.createElement('button');
     btn.className = 'choice-btn';
-    btn.textContent = ch;
+    btn.textContent = `${ch}(${GLYPH_SOUNDS[ch] || ''})`;
+    btn.dataset.ch = ch;
     btn.onclick = () => selectChoice(ch, btn, box);
     box.appendChild(btn);
   });
@@ -440,7 +448,7 @@ function selectChoice(choice, btn, box){
   selectedCorrect[current] = isCorrect;
   [...box.children].forEach(b => {
     b.disabled = true;
-    if (b.textContent === q.answer) b.classList.add('correct');
+    if (b.dataset.ch === q.answer) b.classList.add('correct');
     else if (b === btn) b.classList.add('wrong');
   });
   setTimeout(showAnswer, 700);
