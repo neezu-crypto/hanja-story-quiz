@@ -355,7 +355,12 @@ const QUESTIONS = [
     answer: "禁",
     reading: "금할 금",
     relatedWords: ["금지", "금연", "금연구역"],
-    choices: ["禁", "進", "開", "止"]
+    choices: [
+      { ch: "禁", hun: "금할 금" },
+      { ch: "金", hun: "쇠 금" },
+      { ch: "今", hun: "이제 금" },
+      { ch: "錦", hun: "비단 금" }
+    ]
   },
   {
     id: 2,
@@ -363,7 +368,12 @@ const QUESTIONS = [
     answer: "藥",
     reading: "약 약",
     relatedWords: ["약국", "약사", "약효"],
-    choices: ["藥", "樂", "藝", "業"]
+    choices: [
+      { ch: "藥", hun: "약 약" },
+      { ch: "弱", hun: "약할 약" },
+      { ch: "約", hun: "맺을 약" },
+      { ch: "若", hun: "같을 약" }
+    ]
   },
   {
     id: 3,
@@ -371,7 +381,12 @@ const QUESTIONS = [
     answer: "注",
     reading: "부을/댈 주",
     relatedWords: ["주의", "주목"],
-    choices: ["注", "主", "住", "汪"]
+    choices: [
+      { ch: "注", hun: "부을/댈 주" },
+      { ch: "主", hun: "주인 주" },
+      { ch: "住", hun: "살 주" },
+      { ch: "走", hun: "달릴 주" }
+    ]
   },
   {
     id: 4,
@@ -379,16 +394,14 @@ const QUESTIONS = [
     answer: "效",
     reading: "본받을 효",
     relatedWords: ["효과", "효능"],
-    choices: ["效", "校", "敎", "放"]
+    choices: [
+      { ch: "效", hun: "본받을 효" },
+      { ch: "孝", hun: "효도 효" },
+      { ch: "曉", hun: "새벽 효" },
+      { ch: "酵", hun: "삭힐 효" }
+    ]
   }
 ];
-
-const GLYPH_SOUNDS = {
-  "禁": "금", "進": "진", "開": "개", "止": "지",
-  "藥": "약", "樂": "악", "藝": "예", "業": "업",
-  "注": "주", "主": "주", "住": "주", "汪": "왕",
-  "效": "효", "校": "교", "敎": "교", "放": "방"
-};
 
 let current = 0;
 let selectedCorrect = [];
@@ -431,12 +444,12 @@ function showQuiz(){
   const box = document.getElementById('choices');
   box.innerHTML = '';
   const shuffled = [...q.choices].sort(() => Math.random() - 0.5);
-  shuffled.forEach(ch => {
+  shuffled.forEach(c => {
     const btn = document.createElement('button');
     btn.className = 'choice-btn';
-    btn.textContent = `${ch}(${GLYPH_SOUNDS[ch] || ''})`;
-    btn.dataset.ch = ch;
-    btn.onclick = () => selectChoice(ch, btn, box);
+    btn.textContent = `${c.ch} (${c.hun})`;
+    btn.dataset.ch = c.ch;
+    btn.onclick = () => selectChoice(c.ch, btn, box);
     box.appendChild(btn);
   });
   showScreen('screen-quiz');

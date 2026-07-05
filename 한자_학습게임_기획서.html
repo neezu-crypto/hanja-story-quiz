@@ -333,7 +333,7 @@
       <div class="inner-step">
         <div class="tag">STEP B</div>
         <div class="name">퀴즈</div>
-        <div class="desc">4지선다 객관식(한자+한글 표기 병기)으로 정답 한자 추리</div>
+        <div class="desc">4지선다 객관식(정답과 같은 음의 동음이의 한자 + 훈음 병기)으로 정답 한자 추리</div>
       </div>
       <div class="inner-step">
         <div class="tag">STEP C</div>
@@ -351,7 +351,7 @@
   <section>
     <div class="sec-head"><span class="sec-num">貳 · 02</span><h2 class="sec-title">확정 스펙</h2></div>
     <div class="spec-grid">
-      <div class="spec-row"><div class="lbl">퀴즈 방식</div><div class="val">이야기에는 한자를 한글로 표기하여 포함 · 뜻/상황 서술과 함께 힌트 제공 → 4지선다 객관식(한자+한글 표기 병기)으로 정답 추리</div></div>
+      <div class="spec-row"><div class="lbl">퀴즈 방식</div><div class="val">이야기에는 한자를 한글로 표기하여 포함 · 뜻/상황 서술과 함께 힌트 제공 → 4지선다 객관식은 정답과 <b>같은 음(소리)</b>을 가진 동음이의 한자로 구성(훈음 병기), 소리만으로는 구별 불가 · 뜻을 정확히 알아야 정답 추리 가능</div></div>
       <div class="spec-row"><div class="lbl">그려보기 난이도</div><div class="val">획순 번호(①②③…) 오버레이 표시, 순서대로 캔버스에 따라 그리기 · 정확도 채점은 초안에서 생략</div></div>
       <div class="spec-row"><div class="lbl">획순 데이터 소스</div><div class="val">오픈소스 라이브러리 <b>HanziWriter</b> 사용 (자체 좌표 제작 없이 CDN으로 로드) · 데이터셋에 없는 글자는 다른 한자로 교체</div></div>
       <div class="spec-row"><div class="lbl">타깃 난이도</div><div class="val">일상 생활한자, 성인 교양 수준 (간판·서류·광고 문구 등에서 자주 접하는 한자)</div></div>
@@ -369,7 +369,7 @@
         <div class="body">
           <div class="reading">금할 금 · 금지 / 금연 / 금연구역</div>
           <div class="story">퇴근길, 편의점 유리문에 빨간 글씨로 "금연"이라는 두 글자가 붙어있었다. 이 안에서는 담배를 피울 수 없다는 뜻이었다.</div>
-          <div class="choices">보기: <b>禁(금)</b> / <span class="distract">進(진)</span> · <span class="distract">開(개)</span> · <span class="distract">止(지)</span></div>
+          <div class="choices">보기: <b>禁(금할 금)</b> / <span class="distract">金(쇠 금)</span> · <span class="distract">今(이제 금)</span> · <span class="distract">錦(비단 금)</span></div>
         </div>
       </div>
 
@@ -378,7 +378,7 @@
         <div class="body">
           <div class="reading">약 약 · 약국 / 약사 / 약효</div>
           <div class="story">몸이 아플 때 찾아가는 곳, 그 간판에는 늘 "약국"이라는 단어가 크게 적혀 있다.</div>
-          <div class="choices">보기: <b>藥(약)</b> / <span class="distract">樂(악)</span> · <span class="distract">藝(예)</span> · <span class="distract">業(업)</span></div>
+          <div class="choices">보기: <b>藥(약 약)</b> / <span class="distract">弱(약할 약)</span> · <span class="distract">約(맺을 약)</span> · <span class="distract">若(같을 약)</span></div>
         </div>
       </div>
 
@@ -387,7 +387,7 @@
         <div class="body">
           <div class="reading">부을/댈 주 · 주의 / 주목</div>
           <div class="story">택배 상자 옆면에 붙은 노란 스티커, "주의"라고 적혀 "조심해서 다뤄달라"는 뜻을 전하고 있었다.</div>
-          <div class="choices">보기: <b>注(주)</b> / <span class="distract">主(주)</span> · <span class="distract">住(주)</span> · <span class="distract">汪(왕)</span></div>
+          <div class="choices">보기: <b>注(부을/댈 주)</b> / <span class="distract">主(주인 주)</span> · <span class="distract">住(살 주)</span> · <span class="distract">走(달릴 주)</span></div>
         </div>
       </div>
 
@@ -396,7 +396,7 @@
         <div class="body">
           <div class="reading">본받을 효 · 효과 / 효능</div>
           <div class="story">광고에서 "이 제품을 쓰면 확실히 좋아진다"고 강조할 때 늘 등장하는 단어, "효과"의 첫 글자였다.</div>
-          <div class="choices">보기: <b>效(효)</b> / <span class="distract">校(교)</span> · <span class="distract">敎(교)</span> · <span class="distract">放(방)</span></div>
+          <div class="choices">보기: <b>效(본받을 효)</b> / <span class="distract">孝(효도 효)</span> · <span class="distract">曉(새벽 효)</span> · <span class="distract">酵(삭힐 효)</span></div>
         </div>
       </div>
 
@@ -408,11 +408,16 @@
     <p>문제를 배열로 관리하면 이후 문제 추가·교체가 쉽습니다.</p>
     <pre>{
   <span class="k">"id"</span>: 1,
-  <span class="k">"story"</span>: <span class="s">"퇴근길, 편의점 유리문에 빨간 글씨 두 글자가 붙어있었다. 이 안에서는 담배를 피울 수 없다는 뜻이었다."</span>,
+  <span class="k">"story"</span>: <span class="s">"퇴근길, 편의점 유리문에 빨간 글씨로 \"금연\"이라는 두 글자가 붙어있었다. 이 안에서는 담배를 피울 수 없다는 뜻이었다."</span>,
   <span class="k">"answer"</span>: <span class="s">"禁"</span>,
   <span class="k">"reading"</span>: <span class="s">"금할 금"</span>,
   <span class="k">"relatedWords"</span>: [<span class="s">"금지"</span>, <span class="s">"금연"</span>, <span class="s">"금연구역"</span>],
-  <span class="k">"choices"</span>: [<span class="s">"禁"</span>, <span class="s">"進"</span>, <span class="s">"開"</span>, <span class="s">"止"</span>]
+  <span class="k">"choices"</span>: [
+    { <span class="k">"ch"</span>: <span class="s">"禁"</span>, <span class="k">"hun"</span>: <span class="s">"금할 금"</span> },
+    { <span class="k">"ch"</span>: <span class="s">"金"</span>, <span class="k">"hun"</span>: <span class="s">"쇠 금"</span> },
+    { <span class="k">"ch"</span>: <span class="s">"今"</span>, <span class="k">"hun"</span>: <span class="s">"이제 금"</span> },
+    { <span class="k">"ch"</span>: <span class="s">"錦"</span>, <span class="k">"hun"</span>: <span class="s">"비단 금"</span> }
+  ]
 }</pre>
     <p>획순 좌표는 문제 데이터에 직접 넣지 않고, 재생 시점에 <b>HanziWriter</b> 라이브러리가 <code>answer</code> 글자 기준으로 자체 데이터셋에서 불러옵니다.</p>
   </section>
