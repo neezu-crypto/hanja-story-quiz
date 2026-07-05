@@ -353,6 +353,7 @@
     <div class="spec-grid">
       <div class="spec-row"><div class="lbl">퀴즈 방식</div><div class="val">이야기에는 한자를 직접 노출하지 않음 · 뜻/상황 서술만으로 힌트 제공 → 4지선다 객관식으로 정답 추리</div></div>
       <div class="spec-row"><div class="lbl">그려보기 난이도</div><div class="val">획순 번호(①②③…) 오버레이 표시, 순서대로 캔버스에 따라 그리기 · 정확도 채점은 초안에서 생략</div></div>
+      <div class="spec-row"><div class="lbl">획순 데이터 소스</div><div class="val">오픈소스 라이브러리 <b>HanziWriter</b> 사용 (자체 좌표 제작 없이 CDN으로 로드) · 데이터셋에 없는 글자는 다른 한자로 교체</div></div>
       <div class="spec-row"><div class="lbl">타깃 난이도</div><div class="val">일상 생활한자, 성인 교양 수준 (간판·서류·광고 문구 등에서 자주 접하는 한자)</div></div>
       <div class="spec-row"><div class="lbl">초안 문제 수</div><div class="val">4문제</div></div>
     </div>
@@ -411,16 +412,16 @@
   <span class="k">"answer"</span>: <span class="s">"禁"</span>,
   <span class="k">"reading"</span>: <span class="s">"금할 금"</span>,
   <span class="k">"relatedWords"</span>: [<span class="s">"금지"</span>, <span class="s">"금연"</span>, <span class="s">"금연구역"</span>],
-  <span class="k">"choices"</span>: [<span class="s">"禁"</span>, <span class="s">"進"</span>, <span class="s">"開"</span>, <span class="s">"止"</span>],
-  <span class="k">"strokeOrder"</span>: [ <span class="s">"...획순 좌표 데이터..."</span> ]
+  <span class="k">"choices"</span>: [<span class="s">"禁"</span>, <span class="s">"進"</span>, <span class="s">"開"</span>, <span class="s">"止"</span>]
 }</pre>
+    <p>획순 좌표는 문제 데이터에 직접 넣지 않고, 재생 시점에 <b>HanziWriter</b> 라이브러리가 <code>answer</code> 글자 기준으로 자체 데이터셋에서 불러옵니다.</p>
   </section>
 
   <section>
     <div class="sec-head"><span class="sec-num">伍 · 05</span><h2 class="sec-title">다음 결정 사항</h2></div>
     <ul class="qlist">
       <li><span class="qmark">?</span>이야기 4개 문장을 최종 확정할지, 지금 초안(위 4개)으로 바로 프로토타입 제작에 들어갈지</li>
-      <li><span class="qmark">?</span>획순 데이터(좌표)를 직접 제작할지, 기존 한자 획순 라이브러리/데이터셋을 활용할지</li>
+      <li><span class="qmark">?</span><s>획순 데이터(좌표)를 직접 제작할지, 기존 한자 획순 라이브러리/데이터셋을 활용할지</s> → 결정됨: HanziWriter 라이브러리 활용, 자체 제작 없음</li>
       <li><span class="qmark">?</span>엔딩 화면에서 "다시하기" 외에 결과 공유(이미지/링크) 기능을 포함할지</li>
       <li><span class="qmark">?</span>추후 문제 수를 늘릴 경우 카테고리(간판형/서류형/광고형 등)로 나눌지</li>
     </ul>
