@@ -259,7 +259,7 @@
     <h1>일상 한자, 이야기로 찾다
       <span class="sub">추리형 한자 퀴즈 &amp; 손글씨 학습 게임</span>
     </h1>
-    <p class="hero-tag">이야기 속에 숨은 한자를 추리해서 맞히고, 정답을 확인한 뒤 획순을 따라 직접 그려보는 4문제 구성의 학습 게임입니다.</p>
+    <p class="hero-tag">학교에서 배우는 천자문 한자 중에서 뽑은 100문제로, 이야기 속에 숨은 한자를 추리해서 맞히고 획순을 따라 그려보는 학습 게임입니다. 10문제마다 중간 점수를 확인할 수 있어요.</p>
     <div class="btn-row"><button class="primary" onclick="goIntro()">시작하기</button></div>
   </div>
 
@@ -334,6 +334,16 @@
     </div>
   </div>
 
+  <div id="screen-milestone" class="screen">
+    <div class="eyebrow">중간 점검</div>
+    <div class="end-score" id="milestone-score"></div>
+    <div class="end-sub" id="milestone-sub"></div>
+    <div class="card">
+      <div class="review-list" id="milestone-list"></div>
+      <div class="btn-row"><button class="primary" onclick="continueFromMilestone()">계속하기</button></div>
+    </div>
+  </div>
+
   <div id="screen-end" class="screen">
     <div class="eyebrow">결과</div>
     <div class="end-score" id="end-score"></div>
@@ -349,60 +359,109 @@
 
 <script>
 const QUESTIONS = [
-  {
-    id: 1,
-    story: "퇴근길, 편의점 유리문에 빨간 글씨로 \"금연\"이라는 두 글자가 붙어있었다. 이 안에서는 담배를 피울 수 없다는 뜻이었다.",
-    answer: "禁",
-    reading: "금할 금",
-    relatedWords: ["금지", "금연", "금연구역"],
-    choices: [
-      { ch: "禁", hun: "금할 금" },
-      { ch: "金", hun: "쇠 금" },
-      { ch: "今", hun: "이제 금" },
-      { ch: "錦", hun: "비단 금" }
-    ]
-  },
-  {
-    id: 2,
-    story: "몸이 아플 때 찾아가는 곳, 그 간판에는 늘 \"약국\"이라는 단어가 크게 적혀 있다.",
-    answer: "藥",
-    reading: "약 약",
-    relatedWords: ["약국", "약사", "약효"],
-    choices: [
-      { ch: "藥", hun: "약 약" },
-      { ch: "弱", hun: "약할 약" },
-      { ch: "約", hun: "맺을 약" },
-      { ch: "若", hun: "같을 약" }
-    ]
-  },
-  {
-    id: 3,
-    story: "택배 상자 옆면에 붙은 노란 스티커, \"주의\"라고 적혀 \"조심해서 다뤄달라\"는 뜻을 전하고 있었다.",
-    answer: "注",
-    reading: "부을/댈 주",
-    relatedWords: ["주의", "주목"],
-    choices: [
-      { ch: "注", hun: "부을/댈 주" },
-      { ch: "主", hun: "주인 주" },
-      { ch: "住", hun: "살 주" },
-      { ch: "走", hun: "달릴 주" }
-    ]
-  },
-  {
-    id: 4,
-    story: "광고에서 \"이 제품을 쓰면 확실히 좋아진다\"고 강조할 때 늘 등장하는 단어, \"효과\"의 첫 글자였다.",
-    answer: "效",
-    reading: "본받을 효",
-    relatedWords: ["효과", "효능"],
-    choices: [
-      { ch: "效", hun: "본받을 효" },
-      { ch: "孝", hun: "효도 효" },
-      { ch: "曉", hun: "새벽 효" },
-      { ch: "酵", hun: "삭힐 효" }
-    ]
-  }
+  { id: 1, story: "일기예보에서 \"내일은 우천으로 야외 행사가 취소되었다\"는 소식이 떴다.", answer: "天", reading: "하늘 천", relatedWords: ["천연", "천국", "우천"], choices: [ { ch: "天", hun: "하늘 천" }, { ch: "千", hun: "일천 천" }, { ch: "川", hun: "내 천" }, { ch: "淺", hun: "얕을 천" } ] },
+  { id: 2, story: "뉴스에서 \"오늘 새벽 강한 지진이 발생했다\"는 속보가 떴다.", answer: "地", reading: "땅 지", relatedWords: ["지구", "지진", "지역"], choices: [ { ch: "地", hun: "땅 지" }, { ch: "紙", hun: "종이 지" }, { ch: "知", hun: "알 지" }, { ch: "至", hun: "이를 지" } ] },
+  { id: 3, story: "달력에 동그라미 친 날짜 옆, \"생일\"이라고 적혀 있었다.", answer: "日", reading: "날 일", relatedWords: ["일요일", "생일", "일출"], choices: [ { ch: "日", hun: "날 일" }, { ch: "一", hun: "한 일" }, { ch: "逸", hun: "편안할 일" }, { ch: "壹", hun: "한 일" } ] },
+  { id: 4, story: "통장에 \"월급\"이 들어왔다는 문자가 도착했다.", answer: "月", reading: "달 월", relatedWords: ["월요일", "월급", "세월"], choices: [ { ch: "月", hun: "달 월" }, { ch: "越", hun: "넘을 월" }, { ch: "鉞", hun: "도끼 월" }, { ch: "樾", hun: "그늘 월" } ] },
+  { id: 5, story: "건물 복도에 걸린 빨간 상자에 \"화재 시 사용\"이라는 문구가 적혀 있었다.", answer: "火", reading: "불 화", relatedWords: ["화재", "화요일", "소화기"], choices: [ { ch: "火", hun: "불 화" }, { ch: "話", hun: "말씀 화" }, { ch: "花", hun: "꽃 화" }, { ch: "禾", hun: "벼 화" } ] },
+  { id: 6, story: "편의점 냉장고에서 \"생수\" 한 병을 꺼내 들었다.", answer: "水", reading: "물 수", relatedWords: ["수도", "생수", "수영장"], choices: [ { ch: "水", hun: "물 수" }, { ch: "手", hun: "손 수" }, { ch: "數", hun: "셈 수" }, { ch: "樹", hun: "나무 수" } ] },
+  { id: 7, story: "달력에 빨간 글씨로 \"금요일\"이라고 적혀 있었다.", answer: "金", reading: "쇠 금", relatedWords: ["금요일", "자금", "현금"], choices: [ { ch: "金", hun: "쇠 금" }, { ch: "今", hun: "이제 금" }, { ch: "禁", hun: "금할 금" }, { ch: "錦", hun: "비단 금" } ] },
+  { id: 8, story: "주말 나들이로 가족과 함께 \"수목원\"에 다녀왔다.", answer: "木", reading: "나무 목", relatedWords: ["목요일", "수목원", "목재"], choices: [ { ch: "木", hun: "나무 목" }, { ch: "目", hun: "눈 목" }, { ch: "牧", hun: "칠 목" }, { ch: "睦", hun: "화목할 목" } ] },
+  { id: 9, story: "뉴스에서 \"우리나라 인구\"가 줄고 있다는 통계가 나왔다.", answer: "人", reading: "사람 인", relatedWords: ["인간", "인구", "연예인"], choices: [ { ch: "人", hun: "사람 인" }, { ch: "因", hun: "인할 인" }, { ch: "引", hun: "끌 인" }, { ch: "忍", hun: "참을 인" } ] },
+  { id: 10, story: "학교 시간표에 \"국어\" 수업이 첫 시간으로 적혀 있었다.", answer: "國", reading: "나라 국", relatedWords: ["국가", "국어", "애국"], choices: [ { ch: "國", hun: "나라 국" }, { ch: "局", hun: "판 국" }, { ch: "菊", hun: "국화 국" }, { ch: "鞠", hun: "굽힐 국" } ] },
+  { id: 11, story: "뉴스 자막에 \"국민 여러분께 알려드립니다\"라는 문구가 떴다.", answer: "民", reading: "백성 민", relatedWords: ["국민", "민주", "이민"], choices: [ { ch: "民", hun: "백성 민" }, { ch: "敏", hun: "민첩할 민" }, { ch: "悶", hun: "답답할 민" }, { ch: "旻", hun: "하늘 민" } ] },
+  { id: 12, story: "동화책 표지에 그려진 \"왕관\"을 쓴 공주 그림이 눈에 들어왔다.", answer: "王", reading: "임금 왕", relatedWords: ["왕관", "여왕", "왕따"], choices: [ { ch: "王", hun: "임금 왕" }, { ch: "往", hun: "갈 왕" }, { ch: "旺", hun: "왕성할 왕" }, { ch: "枉", hun: "굽을 왕" } ] },
+  { id: 13, story: "횡단보도 앞에 \"보도블록 공사중\"이라는 안내판이 세워져 있었다.", answer: "道", reading: "길 도", relatedWords: ["도로", "인도", "보도"], choices: [ { ch: "道", hun: "길 도" }, { ch: "圖", hun: "그림 도" }, { ch: "度", hun: "법도 도" }, { ch: "島", hun: "섬 도" } ] },
+  { id: 14, story: "시험지 채점란에 빨간 색으로 \"정답\"이라는 도장이 찍혀 있었다.", answer: "正", reading: "바를 정", relatedWords: ["정직", "정답", "정의"], choices: [ { ch: "正", hun: "바를 정" }, { ch: "停", hun: "머무를 정" }, { ch: "丁", hun: "장정 정" }, { ch: "井", hun: "우물 정" } ] },
+  { id: 15, story: "내비게이션에서 \"이대로 직진하세요\"라는 안내 음성이 나왔다.", answer: "直", reading: "곧을 직", relatedWords: ["정직", "직진", "솔직"], choices: [ { ch: "直", hun: "곧을 직" }, { ch: "職", hun: "직분 직" }, { ch: "織", hun: "짤 직" }, { ch: "稙", hun: "올벼 직" } ] },
+  { id: 16, story: "카드사에서 \"신용 점수가 상승했습니다\"라는 문자가 왔다.", answer: "信", reading: "믿을 신", relatedWords: ["신용", "자신감", "확신"], choices: [ { ch: "信", hun: "믿을 신" }, { ch: "新", hun: "새 신" }, { ch: "辛", hun: "매울 신" }, { ch: "申", hun: "납 신" } ] },
+  { id: 17, story: "행사장 입구에서 \"참가자 명단\"을 확인하는 절차를 거쳤다.", answer: "名", reading: "이름 명", relatedWords: ["이름표", "유명", "명단"], choices: [ { ch: "名", hun: "이름 명" }, { ch: "明", hun: "밝을 명" }, { ch: "鳴", hun: "울 명" }, { ch: "銘", hun: "새길 명" } ] },
+  { id: 18, story: "새 학기가 시작되어 \"학생증\"을 새로 발급받았다.", answer: "學", reading: "배울 학", relatedWords: ["학교", "학생", "학원"], choices: [ { ch: "學", hun: "배울 학" }, { ch: "鶴", hun: "학 학" }, { ch: "虐", hun: "모질 학" }, { ch: "謔", hun: "희롱할 학" } ] },
+  { id: 19, story: "케이크 위에 초를 꽂으며 \"생일 축하합니다\" 노래를 불렀다.", answer: "生", reading: "날 생", relatedWords: ["생일", "생명", "학생"], choices: [ { ch: "生", hun: "날 생" }, { ch: "省", hun: "살필 생" }, { ch: "牲", hun: "희생 생" }, { ch: "甥", hun: "생질 생" } ] },
+  { id: 20, story: "학교 안내문에 \"학부모 공개수업 안내\"라는 제목이 적혀 있었다.", answer: "父", reading: "아비 부", relatedWords: ["부모", "학부모", "신부"], choices: [ { ch: "父", hun: "아비 부" }, { ch: "富", hun: "부유할 부" }, { ch: "部", hun: "떼 부" }, { ch: "副", hun: "버금 부" } ] },
+  { id: 21, story: "졸업식 현수막에 \"자랑스러운 모교\"라는 문구가 걸려 있었다.", answer: "母", reading: "어미 모", relatedWords: ["모교", "부모", "모유"], choices: [ { ch: "母", hun: "어미 모" }, { ch: "模", hun: "본뜰 모" }, { ch: "帽", hun: "모자 모" }, { ch: "毛", hun: "터럭 모" } ] },
+  { id: 22, story: "동생이 친구에게 \"형이랑 나는 세 살 차이야\"라고 소개했다.", answer: "兄", reading: "형 형", relatedWords: ["형제", "의형제"], choices: [ { ch: "兄", hun: "형 형" }, { ch: "刑", hun: "형벌 형" }, { ch: "形", hun: "모양 형" }, { ch: "螢", hun: "반딧불 형" } ] },
+  { id: 23, story: "선생님이 졸업생을 향해 \"자랑스러운 제자들\"이라고 말했다.", answer: "弟", reading: "아우 제", relatedWords: ["형제", "제자"], choices: [ { ch: "弟", hun: "아우 제" }, { ch: "制", hun: "절제할 제" }, { ch: "題", hun: "제목 제" }, { ch: "提", hun: "끌 제" } ] },
+  { id: 24, story: "간식 코너에서 아이가 \"이 과자 먹고 싶어요\"라고 졸랐다.", answer: "子", reading: "아들 자", relatedWords: ["자녀", "왕자", "과자"], choices: [ { ch: "子", hun: "아들 자" }, { ch: "字", hun: "글자 자" }, { ch: "自", hun: "스스로 자" }, { ch: "姉", hun: "손윗누이 자" } ] },
+  { id: 25, story: "화장실 표지판에 \"여자\"라고 적힌 그림이 붙어 있었다.", answer: "女", reading: "계집 녀", relatedWords: ["여자", "소녀", "남녀"], choices: [ { ch: "女", hun: "계집 녀" }, { ch: "如", hun: "같을 여" }, { ch: "餘", hun: "남을 여" }, { ch: "旅", hun: "나그네 여" } ] },
+  { id: 26, story: "옷 가게 진열대에 \"남자 정장 코너\"라는 표지판이 세워져 있었다.", answer: "男", reading: "사내 남", relatedWords: ["남자", "미남", "남녀"], choices: [ { ch: "男", hun: "사내 남" }, { ch: "南", hun: "남녘 남" }, { ch: "藍", hun: "쪽 남" }, { ch: "覽", hun: "볼 람" } ] },
+  { id: 27, story: "건강검진 결과지에 \"심장 박동 정상\"이라는 문구가 적혀 있었다.", answer: "心", reading: "마음 심", relatedWords: ["중심", "관심", "심장"], choices: [ { ch: "心", hun: "마음 심" }, { ch: "深", hun: "깊을 심" }, { ch: "尋", hun: "찾을 심" }, { ch: "甚", hun: "심할 심" } ] },
+  { id: 28, story: "이력서 항목에 \"출신 학교\"를 적는 칸이 있었다.", answer: "身", reading: "몸 신", relatedWords: ["신체", "자신", "출신"], choices: [ { ch: "身", hun: "몸 신" }, { ch: "神", hun: "귀신 신" }, { ch: "臣", hun: "신하 신" }, { ch: "伸", hun: "펼 신" } ] },
+  { id: 29, story: "학교 시간표에 \"체육\" 수업이 마지막 시간으로 적혀 있었다.", answer: "體", reading: "몸 체", relatedWords: ["체육", "신체", "체온"], choices: [ { ch: "體", hun: "몸 체" }, { ch: "滯", hun: "막힐 체" }, { ch: "替", hun: "바꿀 체" }, { ch: "逮", hun: "잡을 체" } ] },
+  { id: 30, story: "다투던 두 친구가 \"이제 화해하자\"며 손을 맞잡았다.", answer: "和", reading: "화할 화", relatedWords: ["평화", "화해", "화합"], choices: [ { ch: "和", hun: "화할 화" }, { ch: "話", hun: "말씀 화" }, { ch: "畵", hun: "그림 화" }, { ch: "禍", hun: "재앙 화" } ] },
+  { id: 31, story: "매장 입구에 \"평일에는 할인 안 됩니다\"라는 안내문이 붙어 있었다.", answer: "平", reading: "평평할 평", relatedWords: ["평화", "평등", "평일"], choices: [ { ch: "平", hun: "평평할 평" }, { ch: "評", hun: "평할 평" }, { ch: "坪", hun: "들 평" }, { ch: "萍", hun: "부평초 평" } ] },
+  { id: 32, story: "공사장 입구에 \"안전제일\"이라는 큰 표지판이 세워져 있었다.", answer: "安", reading: "편안 안", relatedWords: ["안전", "안심", "불안"], choices: [ { ch: "安", hun: "편안 안" }, { ch: "案", hun: "책상 안" }, { ch: "眼", hun: "눈 안" }, { ch: "岸", hun: "언덕 안" } ] },
+  { id: 33, story: "친구들과 \"오락실\"에 들러 게임을 즐겼다.", answer: "樂", reading: "즐길 락", relatedWords: ["오락", "쾌락", "낙원"], choices: [ { ch: "樂", hun: "즐길 락" }, { ch: "洛", hun: "물 이름 락" }, { ch: "落", hun: "떨어질 락" }, { ch: "酪", hun: "진한 유즙 락" } ] },
+  { id: 34, story: "새해 카드에 \"새해 복 많이 받으세요\"라는 문구가 적혀 있었다.", answer: "福", reading: "복 복", relatedWords: ["행복", "복지", "축복"], choices: [ { ch: "福", hun: "복 복" }, { ch: "復", hun: "회복할 복" }, { ch: "服", hun: "옷 복" }, { ch: "腹", hun: "배 복" } ] },
+  { id: 35, story: "뉴스에서 전문가가 \"작은 실수가 큰 화를 부를 수 있다\"고 경고했다.", answer: "禍", reading: "재앙 화", relatedWords: ["전화위복", "화근"], choices: [ { ch: "禍", hun: "재앙 화" }, { ch: "火", hun: "불 화" }, { ch: "化", hun: "될 화" }, { ch: "花", hun: "꽃 화" } ] },
+  { id: 36, story: "학교 게시판에 \"이달의 선행 학생\"이라는 사진이 붙어 있었다.", answer: "善", reading: "착할 선", relatedWords: ["선행", "자선", "최선"], choices: [ { ch: "善", hun: "착할 선" }, { ch: "線", hun: "줄 선" }, { ch: "選", hun: "가릴 선" }, { ch: "鮮", hun: "고울 선" } ] },
+  { id: 37, story: "친구가 \"무서운 악몽을 꿨다\"며 아침부터 하품을 했다.", answer: "惡", reading: "악할 악", relatedWords: ["악몽", "악당", "선악"], choices: [ { ch: "惡", hun: "악할 악" }, { ch: "岳", hun: "큰 산 악" }, { ch: "樂", hun: "노래 악" }, { ch: "愕", hun: "놀랄 악" } ] },
+  { id: 38, story: "선배가 후배에게 \"진심 어린 충고\"를 건넸다.", answer: "忠", reading: "충성 충", relatedWords: ["충고", "충성", "충실"], choices: [ { ch: "忠", hun: "충성 충" }, { ch: "蟲", hun: "벌레 충" }, { ch: "衝", hun: "찌를 충" }, { ch: "忡", hun: "근심할 충" } ] },
+  { id: 39, story: "카네이션을 달아드리며 \"효도 관광 보내드릴게요\"라고 말씀드렸다.", answer: "孝", reading: "효도 효", relatedWords: ["효도", "효자", "효심"], choices: [ { ch: "孝", hun: "효도 효" }, { ch: "曉", hun: "새벽 효" }, { ch: "酵", hun: "삭힐 효" }, { ch: "爻", hun: "효 효" } ] },
+  { id: 40, story: "청첩장에 적힌 \"결혼 예식\"이라는 글자를 확인했다.", answer: "禮", reading: "예도 례", relatedWords: ["예의", "예절", "예식"], choices: [ { ch: "禮", hun: "예도 례" }, { ch: "例", hun: "법식 례" }, { ch: "隸", hun: "종 례" }, { ch: "豫", hun: "미리 예" } ] },
+  { id: 41, story: "동네 병원 간판에 \"인술\"이라는 옛 말이 함께 적혀 있었다.", answer: "仁", reading: "어질 인", relatedWords: ["인자", "인애", "인술"], choices: [ { ch: "仁", hun: "어질 인" }, { ch: "印", hun: "도장 인" }, { ch: "認", hun: "알 인" }, { ch: "姻", hun: "혼인 인" } ] },
+  { id: 42, story: "학급 회의에서 \"정의로운 학급을 만들자\"는 구호가 나왔다.", answer: "義", reading: "옳을 의", relatedWords: ["정의", "의미", "의무"], choices: [ { ch: "義", hun: "옳을 의" }, { ch: "意", hun: "뜻 의" }, { ch: "醫", hun: "의원 의" }, { ch: "衣", hun: "옷 의" } ] },
+  { id: 43, story: "새 학기 첫날, 선생님이 \"반장을 뽑겠습니다\"라고 말했다.", answer: "長", reading: "길 장", relatedWords: ["성장", "반장", "장점"], choices: [ { ch: "長", hun: "길 장" }, { ch: "場", hun: "마당 장" }, { ch: "章", hun: "글 장" }, { ch: "張", hun: "베풀 장" } ] },
+  { id: 44, story: "내비게이션 화면에 \"최단 경로 안내\"라는 문구가 떴다.", answer: "短", reading: "짧을 단", relatedWords: ["단점", "단축", "최단"], choices: [ { ch: "短", hun: "짧을 단" }, { ch: "團", hun: "둥글 단" }, { ch: "端", hun: "끝 단" }, { ch: "段", hun: "층계 단" } ] },
+  { id: 45, story: "체육 시간, 선생님이 \"체력 측정을 실시하겠습니다\"라고 안내했다.", answer: "力", reading: "힘 력", relatedWords: ["노력", "체력", "폭력"], choices: [ { ch: "力", hun: "힘 력" }, { ch: "歷", hun: "지날 력" }, { ch: "曆", hun: "책력 력" }, { ch: "轢", hun: "삐걱거릴 력" } ] },
+  { id: 46, story: "회사 게시판에 \"신임 팀장 임명 소식\"이 붙어 있었다.", answer: "命", reading: "목숨 명", relatedWords: ["생명", "운명", "임명"], choices: [ { ch: "命", hun: "목숨 명" }, { ch: "明", hun: "밝을 명" }, { ch: "銘", hun: "새길 명" }, { ch: "冥", hun: "어두울 명" } ] },
+  { id: 47, story: "일기예보에서 \"심야에 큰 눈이 내릴 것\"이라는 예보가 나왔다.", answer: "深", reading: "깊을 심", relatedWords: ["심각", "심야", "수심"], choices: [ { ch: "深", hun: "깊을 심" }, { ch: "心", hun: "마음 심" }, { ch: "甚", hun: "심할 심" }, { ch: "尋", hun: "찾을 심" } ] },
+  { id: 48, story: "추석이 다가오자 온 가족이 모여 \"송편\"을 빚었다.", answer: "松", reading: "소나무 송", relatedWords: ["송편", "소나무", "노송"], choices: [ { ch: "松", hun: "소나무 송" }, { ch: "送", hun: "보낼 송" }, { ch: "頌", hun: "기릴 송" }, { ch: "訟", hun: "송사할 송" } ] },
+  { id: 49, story: "병원 대기실에서 \"체온을 측정하겠습니다\"라는 안내를 받았다.", answer: "溫", reading: "따뜻할 온", relatedWords: ["온도", "체온", "온천"], choices: [ { ch: "溫", hun: "따뜻할 온" }, { ch: "穩", hun: "편안할 온" }, { ch: "瘟", hun: "염병 온" }, { ch: "蘊", hun: "쌓을 온" } ] },
+  { id: 50, story: "옷 가게 쇼윈도에 \"올겨울 유행 아이템\"이라는 문구가 붙어 있었다.", answer: "流", reading: "흐를 류", relatedWords: ["교류", "유행", "흐름"], choices: [ { ch: "流", hun: "흐를 류" }, { ch: "留", hun: "머무를 류" }, { ch: "柳", hun: "버들 류" }, { ch: "類", hun: "무리 류" } ] },
+  { id: 51, story: "여행 중 카페에 앉아 \"잠깐 휴식\"을 취했다.", answer: "息", reading: "쉴 식", relatedWords: ["휴식", "소식", "탄식"], choices: [ { ch: "息", hun: "쉴 식" }, { ch: "式", hun: "법 식" }, { ch: "植", hun: "심을 식" }, { ch: "識", hun: "알 식" } ] },
+  { id: 52, story: "교실 뒷벽에 위인의 \"명언\"이 적힌 액자가 걸려 있었다.", answer: "言", reading: "말씀 언", relatedWords: ["언어", "명언", "발언"], choices: [ { ch: "言", hun: "말씀 언" }, { ch: "焉", hun: "어찌 언" }, { ch: "諺", hun: "속담 언" }, { ch: "彦", hun: "선비 언" } ] },
+  { id: 53, story: "가족회의 끝에 \"이사 날짜를 확정하자\"고 결정했다.", answer: "定", reading: "정할 정", relatedWords: ["결정", "안정", "정착"], choices: [ { ch: "定", hun: "정할 정" }, { ch: "停", hun: "머무를 정" }, { ch: "政", hun: "정사 정" }, { ch: "井", hun: "우물 정" } ] },
+  { id: 54, story: "골목 어귀에 새로 생긴 \"미용실\" 간판이 눈에 띄었다.", answer: "美", reading: "아름다울 미", relatedWords: ["미인", "미술", "미용실"], choices: [ { ch: "美", hun: "아름다울 미" }, { ch: "未", hun: "아닐 미" }, { ch: "味", hun: "맛 미" }, { ch: "微", hun: "작을 미" } ] },
+  { id: 55, story: "버스 안내 방송에서 \"이번 정류장이 종점입니다\"라는 안내가 나왔다.", answer: "終", reading: "마칠 종", relatedWords: ["최종", "종료", "종점"], choices: [ { ch: "終", hun: "마칠 종" }, { ch: "鐘", hun: "쇠북 종" }, { ch: "種", hun: "씨 종" }, { ch: "從", hun: "좇을 종" } ] },
+  { id: 56, story: "훈련소에서 조교가 큰 소리로 \"명령\"을 내렸다.", answer: "令", reading: "하여금 령", relatedWords: ["명령", "법령", "지시"], choices: [ { ch: "令", hun: "하여금 령" }, { ch: "領", hun: "거느릴 령" }, { ch: "靈", hun: "신령 령" }, { ch: "零", hun: "떨어질 령" } ] },
+  { id: 57, story: "음악 경연 프로그램에서 심사위원이 \"천재적인 재능\"이라며 감탄했다.", answer: "才", reading: "재주 재", relatedWords: ["천재", "재능", "인재"], choices: [ { ch: "才", hun: "재주 재" }, { ch: "財", hun: "재물 재" }, { ch: "再", hun: "다시 재" }, { ch: "災", hun: "재앙 재" } ] },
+  { id: 58, story: "결혼식 사회자가 \"이제 신랑 신부 행진이 있겠습니다\"라고 안내했다.", answer: "夫", reading: "지아비 부", relatedWords: ["부부", "농부", "대부"], choices: [ { ch: "夫", hun: "지아비 부" }, { ch: "富", hun: "부유할 부" }, { ch: "部", hun: "떼 부" }, { ch: "副", hun: "버금 부" } ] },
+  { id: 59, story: "마트 전단지에 \"주부님들을 위한 특가 세일\"이라는 문구가 적혀 있었다.", answer: "婦", reading: "며느리 부", relatedWords: ["부부", "주부", "임산부"], choices: [ { ch: "婦", hun: "며느리 부" }, { ch: "附", hun: "붙을 부" }, { ch: "府", hun: "관청 부" }, { ch: "負", hun: "질 부" } ] },
+  { id: 60, story: "동창회 초대장에 \"20년 만의 동창 모임\"이라는 문구가 적혀 있었다.", answer: "同", reading: "한가지 동", relatedWords: ["동일", "동창", "공동"], choices: [ { ch: "同", hun: "한가지 동" }, { ch: "動", hun: "움직일 동" }, { ch: "洞", hun: "골 동" }, { ch: "冬", hun: "겨울 동" } ] },
+  { id: 61, story: "일기예보에서 \"오늘은 공기가 매우 탁하다\"는 경고가 떴다.", answer: "氣", reading: "기운 기", relatedWords: ["공기", "기운", "인기"], choices: [ { ch: "氣", hun: "기운 기" }, { ch: "記", hun: "기록할 기" }, { ch: "期", hun: "기약할 기" }, { ch: "旗", hun: "기 기" } ] },
+  { id: 62, story: "출근길, 라디오에서 \"교통 정체 구간\"을 알리는 방송이 나왔다.", answer: "交", reading: "사귈 교", relatedWords: ["교통", "교류", "교제"], choices: [ { ch: "交", hun: "사귈 교" }, { ch: "敎", hun: "가르칠 교" }, { ch: "校", hun: "학교 교" }, { ch: "橋", hun: "다리 교" } ] },
+  { id: 63, story: "졸업앨범 마지막 장에 \"영원한 우정\"이라는 문구를 적었다.", answer: "友", reading: "벗 우", relatedWords: ["친구", "우정", "교우"], choices: [ { ch: "友", hun: "벗 우" }, { ch: "雨", hun: "비 우" }, { ch: "牛", hun: "소 우" }, { ch: "郵", hun: "우편 우" } ] },
+  { id: 64, story: "화장품 성분표에서 \"주요 성분\"을 꼼꼼히 확인했다.", answer: "分", reading: "나눌 분", relatedWords: ["부분", "기분", "성분"], choices: [ { ch: "分", hun: "나눌 분" }, { ch: "粉", hun: "가루 분" }, { ch: "憤", hun: "분할 분" }, { ch: "奔", hun: "달릴 분" } ] },
+  { id: 65, story: "추석 명절을 맞아 온 가족이 고향 집에 모였다.", answer: "節", reading: "마디 절", relatedWords: ["계절", "명절", "절약"], choices: [ { ch: "節", hun: "마디 절" }, { ch: "切", hun: "끊을 절" }, { ch: "折", hun: "꺾을 절" }, { ch: "絶", hun: "끊을 절" } ] },
+  { id: 66, story: "회사 로비 시계를 보며 \"드디어 퇴근 시간이다\"라고 중얼거렸다.", answer: "退", reading: "물러날 퇴", relatedWords: ["퇴근", "후퇴", "은퇴"], choices: [ { ch: "退", hun: "물러날 퇴" }, { ch: "堆", hun: "쌓을 퇴" }, { ch: "腿", hun: "다리 퇴" }, { ch: "頹", hun: "무너질 퇴" } ] },
+  { id: 67, story: "심리 테스트 결과지에 \"외향적인 성격\"이라고 적혀 있었다.", answer: "性", reading: "성품 성", relatedWords: ["성격", "개성", "가능성"], choices: [ { ch: "性", hun: "성품 성" }, { ch: "姓", hun: "성씨 성" }, { ch: "成", hun: "이룰 성" }, { ch: "城", hun: "재 성" } ] },
+  { id: 68, story: "일기장 마지막 줄에 \"오늘따라 감정이 복잡하다\"고 적었다.", answer: "情", reading: "뜻 정", relatedWords: ["감정", "사정", "우정"], choices: [ { ch: "情", hun: "뜻 정" }, { ch: "精", hun: "정할 정" }, { ch: "靜", hun: "고요할 정" }, { ch: "淨", hun: "깨끗할 정" } ] },
+  { id: 69, story: "체육공원 입구에 \"운동 기구 이용 안내\"라는 표지판이 세워져 있었다.", answer: "動", reading: "움직일 동", relatedWords: ["운동", "활동", "감동"], choices: [ { ch: "動", hun: "움직일 동" }, { ch: "東", hun: "동녘 동" }, { ch: "童", hun: "아이 동" }, { ch: "銅", hun: "구리 동" } ] },
+  { id: 70, story: "박물관 전시실에 \"고대 신화 속 이야기\"라는 안내문이 붙어 있었다.", answer: "神", reading: "귀신 신", relatedWords: ["정신", "신비", "신화"], choices: [ { ch: "神", hun: "귀신 신" }, { ch: "晨", hun: "새벽 신" }, { ch: "辰", hun: "별 신" }, { ch: "愼", hun: "삼갈 신" } ] },
+  { id: 71, story: "축구 중계에서 해설자가 \"탄탄한 수비\"라고 칭찬했다.", answer: "守", reading: "지킬 수", relatedWords: ["수비", "보수", "수호"], choices: [ { ch: "守", hun: "지킬 수" }, { ch: "授", hun: "줄 수" }, { ch: "收", hun: "거둘 수" }, { ch: "隨", hun: "따를 수" } ] },
+  { id: 72, story: "SNS 게시물 아래 \"이거 진짜야?\"라는 댓글이 달렸다.", answer: "真", reading: "참 진", relatedWords: ["진짜", "진실", "사진"], choices: [ { ch: "真", hun: "참 진" }, { ch: "進", hun: "나아갈 진" }, { ch: "珍", hun: "보배 진" }, { ch: "陣", hun: "진 칠 진" } ] },
+  { id: 73, story: "서점 매대에 \"이달의 인기 잡지\"가 진열되어 있었다.", answer: "志", reading: "뜻 지", relatedWords: ["의지", "잡지", "동지"], choices: [ { ch: "志", hun: "뜻 지" }, { ch: "支", hun: "지탱할 지" }, { ch: "指", hun: "가리킬 지" }, { ch: "持", hun: "가질 지" } ] },
+  { id: 74, story: "성적표를 받아 든 아이가 \"드디어 만점이다!\"라며 기뻐했다.", answer: "滿", reading: "찰 만", relatedWords: ["만족", "불만", "만점"], choices: [ { ch: "滿", hun: "찰 만" }, { ch: "慢", hun: "거만할 만" }, { ch: "晩", hun: "늦을 만" }, { ch: "漫", hun: "흩어질 만" } ] },
+  { id: 75, story: "동물원 입구에 \"오늘의 동물 먹이주기 체험\"이라는 안내판이 세워져 있었다.", answer: "物", reading: "물건 물", relatedWords: ["물건", "동물", "식물"], choices: [ { ch: "物", hun: "물건 물" }, { ch: "勿", hun: "말 물" }, { ch: "沕", hun: "아득할 물" }, { ch: "昒", hun: "어두울 물" } ] },
+  { id: 76, story: "발표 자료 첫 장에 \"이 프로젝트의 의미\"라는 제목을 적었다.", answer: "意", reading: "뜻 의", relatedWords: ["의미", "의견", "의지"], choices: [ { ch: "意", hun: "뜻 의" }, { ch: "醫", hun: "의원 의" }, { ch: "依", hun: "의지할 의" }, { ch: "疑", hun: "의심할 의" } ] },
+  { id: 77, story: "역사 다큐멘터리에서 \"고대 황제의 무덤\"이 발굴됐다는 소식을 다뤘다.", answer: "皇", reading: "임금 황", relatedWords: ["황제", "교황", "황실"], choices: [ { ch: "皇", hun: "임금 황" }, { ch: "黃", hun: "누를 황" }, { ch: "況", hun: "하물며 황" }, { ch: "荒", hun: "거칠 황" } ] },
+  { id: 78, story: "체육대회 진행자가 \"지금부터 경기를 시작하겠습니다\"라고 외쳤다.", answer: "始", reading: "비로소 시", relatedWords: ["시작", "시초", "개시"], choices: [ { ch: "始", hun: "비로소 시" }, { ch: "市", hun: "저자 시" }, { ch: "時", hun: "때 시" }, { ch: "試", hun: "시험 시" } ] },
+  { id: 79, story: "뉴스에서 \"새로운 제도 시행\"을 알리는 자막이 떴다.", answer: "制", reading: "절제할 제", relatedWords: ["제도", "통제", "제작"], choices: [ { ch: "制", hun: "절제할 제" }, { ch: "除", hun: "덜 제" }, { ch: "提", hun: "끌 제" }, { ch: "際", hun: "즈음 제" } ] },
+  { id: 80, story: "휴대폰 화면에 엄마에게서 온 \"문자 메시지\" 알림이 떴다.", answer: "文", reading: "글월 문", relatedWords: ["문자", "문화", "작문"], choices: [ { ch: "文", hun: "글월 문" }, { ch: "門", hun: "문 문" }, { ch: "聞", hun: "들을 문" }, { ch: "紋", hun: "무늬 문" } ] },
+  { id: 81, story: "외국 영화를 볼 때 화면 아래 \"한글 자막\"을 켰다.", answer: "字", reading: "글자 자", relatedWords: ["문자", "글자", "자막"], choices: [ { ch: "字", hun: "글자 자" }, { ch: "姉", hun: "손윗누이 자" }, { ch: "慈", hun: "사랑 자" }, { ch: "磁", hun: "자석 자" } ] },
+  { id: 82, story: "백화점 매장 입구에 \"가을 신상 의류\"라는 현수막이 걸려 있었다.", answer: "衣", reading: "옷 의", relatedWords: ["의복", "의류", "탈의실"], choices: [ { ch: "衣", hun: "옷 의" }, { ch: "依", hun: "의지할 의" }, { ch: "疑", hun: "의심할 의" }, { ch: "誼", hun: "정 의" } ] },
+  { id: 83, story: "마라톤 결승선에서 \"1위로 골인했다\"는 방송이 나왔다.", answer: "位", reading: "자리 위", relatedWords: ["순위", "위치", "단위"], choices: [ { ch: "位", hun: "자리 위" }, { ch: "危", hun: "위태할 위" }, { ch: "委", hun: "맡길 위" }, { ch: "胃", hun: "밥통 위" } ] },
+  { id: 84, story: "지하철 임산부 배려석 앞에 \"자리를 양보해 주세요\"라는 스티커가 붙어 있었다.", answer: "讓", reading: "사양할 양", relatedWords: ["양보", "겸양"], choices: [ { ch: "讓", hun: "사양할 양" }, { ch: "陽", hun: "볕 양" }, { ch: "養", hun: "기를 양" }, { ch: "洋", hun: "큰 바다 양" } ] },
+  { id: 85, story: "부동산 안내문에 \"소유주 확인 후 계약 진행\"이라고 적혀 있었다.", answer: "有", reading: "있을 유", relatedWords: ["소유", "유명", "보유"], choices: [ { ch: "有", hun: "있을 유" }, { ch: "由", hun: "말미암을 유" }, { ch: "油", hun: "기름 유" }, { ch: "遊", hun: "놀 유" } ] },
+  { id: 86, story: "친구가 갑작스러운 소식에 \"너무 황당하다\"며 어이없어했다.", answer: "唐", reading: "당나라 당", relatedWords: ["황당", "당황", "당연"], choices: [ { ch: "唐", hun: "당나라 당" }, { ch: "堂", hun: "집 당" }, { ch: "糖", hun: "엿 당" }, { ch: "黨", hun: "무리 당" } ] },
+  { id: 87, story: "호텔 안내판에 \"조식은 7시부터 제공됩니다\"라고 적혀 있었다.", answer: "朝", reading: "아침 조", relatedWords: ["조식", "조회", "왕조"], choices: [ { ch: "朝", hun: "아침 조" }, { ch: "助", hun: "도울 조" }, { ch: "造", hun: "지을 조" }, { ch: "潮", hun: "밀물 조" } ] },
+  { id: 88, story: "수업이 끝나갈 때쯤 선생님이 \"질문 있나요?\"라고 물었다.", answer: "問", reading: "물을 문", relatedWords: ["질문", "방문", "문제"], choices: [ { ch: "問", hun: "물을 문" }, { ch: "門", hun: "문 문" }, { ch: "聞", hun: "들을 문" }, { ch: "紋", hun: "무늬 문" } ] },
+  { id: 89, story: "라디오 사연 코너에서 \"오래된 연애 이야기\"가 소개됐다.", answer: "愛", reading: "사랑 애", relatedWords: ["애정", "애국", "연애"], choices: [ { ch: "愛", hun: "사랑 애" }, { ch: "哀", hun: "슬플 애" }, { ch: "涯", hun: "물가 애" }, { ch: "曖", hun: "희미할 애" } ] },
+  { id: 90, story: "육아 카페 게시판에 \"초보 육아 꿀팁\"이라는 글이 인기였다.", answer: "育", reading: "기를 육", relatedWords: ["교육", "체육", "육아"], choices: [ { ch: "育", hun: "기를 육" }, { ch: "肉", hun: "고기 육" }, { ch: "陸", hun: "뭍 육" }, { ch: "六", hun: "여섯 육" } ] },
+  { id: 91, story: "역사 만화책에서 \"왕을 향한 충신의 마음\"을 다뤘다.", answer: "臣", reading: "신하 신", relatedWords: ["충신", "신하"], choices: [ { ch: "臣", hun: "신하 신" }, { ch: "新", hun: "새 신" }, { ch: "辛", hun: "매울 신" }, { ch: "申", hun: "납 신" } ] },
+  { id: 92, story: "친구가 용기를 내어 \"드디어 고백했다\"며 웃었다.", answer: "白", reading: "흰 백", relatedWords: ["백색", "백기", "고백"], choices: [ { ch: "白", hun: "흰 백" }, { ch: "百", hun: "일백 백" }, { ch: "伯", hun: "맏 백" }, { ch: "柏", hun: "측백 백" } ] },
+  { id: 93, story: "화장품 매장에 \"피부 변화를 경험하세요\"라는 문구가 걸려 있었다.", answer: "化", reading: "될 화", relatedWords: ["변화", "화장", "소화"], choices: [ { ch: "化", hun: "될 화" }, { ch: "火", hun: "불 화" }, { ch: "花", hun: "꽃 화" }, { ch: "話", hun: "말씀 화" } ] },
+  { id: 94, story: "봄이 되자 마당 곳곳에 \"잡초\"가 무성하게 자랐다.", answer: "草", reading: "풀 초", relatedWords: ["초록", "초원", "잡초"], choices: [ { ch: "草", hun: "풀 초" }, { ch: "初", hun: "처음 초" }, { ch: "招", hun: "부를 초" }, { ch: "超", hun: "뛰어넘을 초" } ] },
+  { id: 95, story: "내비게이션이 \"진행 방향을 재탐색합니다\"라고 안내했다.", answer: "方", reading: "모 방", relatedWords: ["방향", "지방", "방법"], choices: [ { ch: "方", hun: "모 방" }, { ch: "房", hun: "방 방" }, { ch: "訪", hun: "찾을 방" }, { ch: "防", hun: "막을 방" } ] },
+  { id: 96, story: "체중계에 올라선 순간 \"기준 몸무게 초과\"라는 표시가 떴다.", answer: "過", reading: "지날 과", relatedWords: ["과거", "통과", "초과"], choices: [ { ch: "過", hun: "지날 과" }, { ch: "果", hun: "실과 과" }, { ch: "課", hun: "공부할 과" }, { ch: "科", hun: "과목 과" } ] },
+  { id: 97, story: "학교 규칙이 바뀌며 \"교칙 개정 안내문\"이 게시판에 붙었다.", answer: "改", reading: "고칠 개", relatedWords: ["개선", "개정", "개혁"], choices: [ { ch: "改", hun: "고칠 개" }, { ch: "個", hun: "낱 개" }, { ch: "開", hun: "열 개" }, { ch: "介", hun: "낄 개" } ] },
+  { id: 98, story: "면접관이 \"본인의 능력을 어필해 보세요\"라고 요청했다.", answer: "能", reading: "능할 능", relatedWords: ["가능", "능력", "재능"], choices: [ { ch: "能", hun: "능할 능" }, { ch: "陵", hun: "언덕 능" }, { ch: "菱", hun: "마름 능" }, { ch: "綾", hun: "비단 능" } ] },
+  { id: 99, story: "약속을 깜빡한 친구가 \"건망증이 심해졌다\"며 미안해했다.", answer: "忘", reading: "잊을 망", relatedWords: ["망각", "건망증"], choices: [ { ch: "忘", hun: "잊을 망" }, { ch: "望", hun: "바랄 망" }, { ch: "亡", hun: "망할 망" }, { ch: "妄", hun: "망령될 망" } ] },
+  { id: 100, story: "음악실 한쪽에 다양한 \"악기\"들이 가지런히 정리되어 있었다.", answer: "器", reading: "그릇 기", relatedWords: ["그릇", "악기", "기구"], choices: [ { ch: "器", hun: "그릇 기" }, { ch: "期", hun: "기약할 기" }, { ch: "旗", hun: "기 기" }, { ch: "氣", hun: "기운 기" } ] }
 ];
 
+const BLOCK_SIZE = 10;
 let current = 0;
 let selectedCorrect = [];
 let hanziWriter = null;
@@ -415,11 +474,12 @@ function showScreen(id){
 function renderProgress(containerId){
   const el = document.getElementById(containerId);
   el.innerHTML = '';
-  QUESTIONS.forEach((_, i) => {
+  const posInBlock = current % BLOCK_SIZE;
+  for (let i = 0; i < BLOCK_SIZE; i++){
     const dot = document.createElement('div');
-    dot.className = 'dot' + (i < current ? ' done' : (i === current ? ' now' : ''));
+    dot.className = 'dot' + (i < posInBlock ? ' done' : (i === posInBlock ? ' now' : ''));
     el.appendChild(dot);
-  });
+  }
 }
 
 function goIntro(){ showScreen('screen-intro'); }
@@ -539,10 +599,39 @@ function clearCanvas(){
 function nextQuestion(){
   current++;
   if (current < QUESTIONS.length){
-    showStory();
+    if (current % BLOCK_SIZE === 0){
+      showMilestone();
+    } else {
+      showStory();
+    }
   } else {
     showEnd();
   }
+}
+
+function showMilestone(){
+  const blockStart = current - BLOCK_SIZE;
+  const blockResults = selectedCorrect.slice(blockStart, current);
+  const blockCorrect = blockResults.filter(Boolean).length;
+  const totalCorrect = selectedCorrect.filter(Boolean).length;
+
+  document.getElementById('milestone-score').textContent = `${blockCorrect} / ${BLOCK_SIZE}`;
+  document.getElementById('milestone-sub').textContent = `이번 10문제 결과 · 지금까지 총 ${totalCorrect} / ${current}문제 정답`;
+
+  const list = document.getElementById('milestone-list');
+  list.innerHTML = '';
+  QUESTIONS.slice(blockStart, current).forEach((q, i) => {
+    const isCorrect = blockResults[i];
+    const row = document.createElement('div');
+    row.className = 'review-row ' + (isCorrect ? 'ok' : 'no');
+    row.innerHTML = `<span class="rg">${q.answer}</span>${q.reading} · ${isCorrect ? '정답' : '오답'}`;
+    list.appendChild(row);
+  });
+  showScreen('screen-milestone');
+}
+
+function continueFromMilestone(){
+  showStory();
 }
 
 function showEnd(){
