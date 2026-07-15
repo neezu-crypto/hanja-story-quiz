@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>클로드 코드, 처음 쓰는 법</title>
+<style>
+  * { box-sizing: border-box; }
+  body{
+    margin:0;
+    background:#f5f1e8;
+    color:#222;
+    font-family:-apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height:1.9;
+    font-size:19px;
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:40px 24px 100px;
+  }
+  h1{
+    font-size:32px;
+    margin:0 0 8px;
+    color:#7e2c1f;
+  }
+  .lead{
+    font-size:19px;
+    color:#555;
+    margin-bottom:36px;
+  }
+  h2{
+    font-size:24px;
+    margin:48px 0 14px;
+    padding-top:10px;
+    border-top:3px solid #e3d9c2;
+    color:#3f5346;
+  }
+  h2 .num{
+    display:inline-block;
+    width:34px;height:34px;
+    background:#7e2c1f;
+    color:#fff;
+    border-radius:50%;
+    text-align:center;
+    line-height:34px;
+    font-size:18px;
+    margin-right:10px;
+  }
+  p{ margin:12px 0; }
+  .box{
+    background:#ffffff;
+    border:1px solid #e3d9c2;
+    border-radius:12px;
+    padding:20px 22px;
+    margin:16px 0;
+  }
+  .step{
+    background:#fffdf7;
+    border:1px solid #e8dfc8;
+    border-radius:10px;
+    padding:16px 18px;
+    margin:12px 0;
+  }
+  .step b{ color:#7e2c1f; }
+  .say{
+    background:#f0ede2;
+    border-left:5px solid #4f6d5f;
+    border-radius:6px;
+    padding:14px 18px;
+    margin:10px 0;
+    font-size:19px;
+  }
+  .say::before{
+    content:"이렇게 말해보세요 → ";
+    font-weight:bold;
+    color:#4f6d5f;
+  }
+  .tip{
+    background:#fbeee9;
+    border-left:5px solid #b8923f;
+    border-radius:6px;
+    padding:14px 18px;
+    margin:16px 0;
+  }
+  .tip b{ color:#a8402f; }
+  code{
+    background:#eee6d3;
+    padding:2px 8px;
+    border-radius:5px;
+    font-size:18px;
+  }
+  ul{ padding-left:22px; }
+  li{ margin:8px 0; }
+  .end{
+    margin-top:60px;
+    padding:24px;
+    background:#eef1ec;
+    border-radius:12px;
+    text-align:center;
+    color:#3f5346;
+    font-size:19px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>클로드 코드, 처음 쓰는 법</h1>
+  <p class="lead">
+    이 페이지는 딸이 아빠를 위해 만들었어요.
+    낯설게 느껴져도 걱정하지 마세요. 사실 아주 간단해요 —
+    <b>화면에 대고 하고 싶은 말을 그냥 한글로 적기만 하면</b> 됩니다.
+  </p>
+
+  <h2><span class="num">1</span>클로드 코드가 뭔가요?</h2>
+  <p>
+    똑똑한 조수라고 생각하시면 돼요. 컴퓨터 프로그램을 대신 만들어주고,
+    고쳐주고, 설명도 해주는 프로그램이에요.
+  </p>
+  <p>
+    지금 이 프로젝트는 "이야기 속에 숨은 한자를 맞히는 퀴즈 게임"인데,
+    딸이 이 조수와 대화하면서 만들었어요. 이제부터는 아빠가 이 조수에게
+    말을 걸어서 계속 이어 만들 수 있어요.
+  </p>
+
+  <h2><span class="num">2</span>여는 방법</h2>
+  <div class="step">
+    <b>① 터미널 열기</b><br>
+    화면 오른쪽 위 돋보기(스팟라이트)를 누르고 "터미널"이라고 친 다음 엔터를 누르세요.
+    까만 화면이 하나 뜰 거예요. 겁먹지 않으셔도 돼요, 그냥 글자 입력하는 창이에요.
+  </div>
+  <div class="step">
+    <b>② 프로젝트 폴더로 이동하기</b><br>
+    터미널에 아래 글자를 그대로 적고 엔터를 누르세요.
+    <div class="box"><code>cd Documents/GitHub/hanja-story-quiz</code></div>
+  </div>
+  <div class="step">
+    <b>③ 조수 부르기</b><br>
+    아래 글자를 적고 엔터를 누르세요.
+    <div class="box"><code>claude</code></div>
+    잠시 후 화면이 바뀌면서 준비가 끝나요. 이제부터 그냥 하고 싶은 말을 적으면 됩니다.
+  </div>
+
+  <h2><span class="num">3</span>어떻게 말을 거나요?</h2>
+  <p>
+    어려운 명령어나 특별한 문법은 몰라도 돼요. 사람한테 부탁하듯이
+    <b>편하게 한글 문장으로</b> 적으면 됩니다. 아래는 이 퀴즈 게임에서
+    바로 써볼 수 있는 예시예요. 그대로 따라 적어도 좋아요.
+  </p>
+
+  <div class="say">문제를 하나만 더 추가해줘</div>
+  <div class="say">시작 화면에 있는 글씨를 조금 더 크게 바꿔줘</div>
+  <div class="say">지금까지 뭘 했는지 요약해서 설명해줘</div>
+  <div class="say">방금 바꾼 거 마음에 안 들어, 원래대로 되돌려줘</div>
+  <div class="say">이 화면을 실제로 켜서 잘 되는지 확인해줘</div>
+  <div class="say">이거 무슨 뜻인지 쉽게 설명해줘</div>
+
+  <p>
+    말을 걸고 나면 조수가 잠깐 생각하고, 무엇을 할지 화면에 보여줘요.
+    그리고 파일을 바꾸기 전에 <b>"이렇게 해도 될까요?"</b>라고 물어볼 때가 있어요.
+    그럴 땐 괜찮으면 그냥 엔터(허용)를 누르시면 되고, 마음에 안 들면 거절해도 돼요.
+  </p>
+
+  <h2><span class="num">4</span>알아두면 마음 편한 것들</h2>
+  <ul>
+    <li>
+      <b>실수해도 괜찮아요.</b> 대부분은 되돌릴 수 있어요.
+      막히면 그냥 "방금 한 거 되돌려줘"라고 말하면 됩니다.
+    </li>
+    <li>
+      <b>작업이 끝나면 저장(커밋)해달라고 하세요.</b>
+      "작업 다 됐으면 저장해줘"라고 말하면 지금까지 바뀐 내용을 안전하게 기록해줘요.
+    </li>
+    <li>
+      <b>멈추고 싶을 땐</b> 키보드에서 <code>esc</code> 키를 누르면 하던 일을 멈춰요.
+    </li>
+    <li>
+      <b>대화창을 새로 시작하고 싶으면</b> 그냥 조수 프로그램을 껐다가
+      다시 <code>claude</code>라고 입력하면 돼요.
+    </li>
+  </ul>
+
+  <div class="tip">
+    <b>팁 —</b> 완벽한 문장이 아니어도 괜찮아요. "여기 좀 이상한데?" 처럼
+    두루뭉술하게 말해도 조수가 알아서 찾아보고 물어봐요. 모르는 용어가 나오면
+    부끄러워하지 말고 "그게 뭐야?"라고 바로 물어보세요.
+  </div>
+
+  <div class="end">
+    천천히 하셔도 충분해요. 막히는 부분이 있으면 딸한테 언제든 전화 주세요.
+  </div>
+
+</div>
+</body>
+</html>
